@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #FAFAFA;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-selection, .comparison-table {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .product-selection h2 {
+            font-size: 24px;
+            color: #1E88E5;
+        }
+
+        .product-selection select, .product-selection button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+        }
+
+        .compare-btn {
+            background-color: #FF4081;
+            color: white;
+            cursor: pointer;
+        }
+
+        .comparison-table {
+            overflow-x: auto;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .comparison-table th {
+            background-color: #1E88E5;
+            color: white;
+        }
+
+        .comparison-table td {
+            background-color: #fff;
+        }
+
+        .comparison-table td.different {
+            background-color: #FFEBEE;
+        }
+
+        @media (max-width: 768px) {
+            .product-selection select, .product-selection button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Product Selection Form -->
+        <div class="product-selection">
+            <h2>Select Products to Compare</h2>
+            <select id="product1">
+                <option value="product1">Product 1</option>
+                <option value="product2">Product 2</option>
+                <option value="product3">Product 3</option>
+            </select>
+            <select id="product2">
+                <option value="product1">Product 1</option>
+                <option value="product2">Product 2</option>
+                <option value="product3">Product 3</option>
+            </select>
+            <button class="compare-btn" onclick="compareProducts()">Compare</button>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="comparison-table" id="comparisonTable">
+            <!-- Table will be populated dynamically -->
+        </div>
+    </div>
+
+    <script>
+        function compareProducts() {
+            // Sample product data
+            const products = {
+                product1: { name: "Product 1", price: "$100", brand: "Brand A", specs: "Specs 1" },
+                product2: { name: "Product 2", price: "$200", brand: "Brand B", specs: "Specs 2" },
+                product3: { name: "Product 3", price: "$150", brand: "Brand C", specs: "Specs 3" }
+            };
+
+            const product1 = document.getElementById("product1").value;
+            const product2 = document.getElementById("product2").value;
+
+            const product1Data = products[product1];
+            const product2Data = products[product2];
+
+            let tableHTML = `
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>${product1Data.name}</th>
+                        <th>${product2Data.name}</th>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td>${product1Data.price}</td>
+                        <td class="${product1Data.price !== product2Data.price ? 'different' : ''}">${product2Data.price}</td>
+                    </tr>
+                    <tr>
+                        <td>Brand</td>
+                        <td>${product1Data.brand}</td>
+                        <td class="${product1Data.brand !== product2Data.brand ? 'different' : ''}">${product2Data.brand}</td>
+                    </tr>
+                    <tr>
+                        <td>Specs</td>
+                        <td>${product1Data.specs}</td>
+                        <td class="${product1Data.specs !== product2Data.specs ? 'different' : ''}">${product2Data.specs}</td>
+                    </tr>
+                </table>
+            `;
+
+            document.getElementById("comparisonTable").innerHTML = tableHTML;
+        }
+    </script>
+</body>
+</html>
